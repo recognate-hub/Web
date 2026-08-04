@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #E9EEF6;
+  --color-base-dark: #1B2436;
+  --color-text-primary: #0B1F3A;
+  --color-text-secondary: #55617A;
+  --color-accent: #2563EB;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-2: #0EA5E9;
+  --color-accent-purple: #8b5cf6;
+  --color-accent-purple-hover: #7c3aed;
+  --color-accent-cyan: #06b6d4;
+  --color-success: #16A34A;
+
+  --shadow-neumorph: 8px 8px 16px rgba(163, 177, 198, 0.55), -8px -8px 16px rgba(255, 255, 255, 0.8);
+  --shadow-neumorph-hover: 4px 4px 8px rgba(163, 177, 198, 0.55), -4px -4px 8px rgba(255, 255, 255, 0.8);
+  --shadow-neumorph-inset: inset 4px 4px 8px rgba(163, 177, 198, 0.5), inset -4px -4px 8px rgba(255, 255, 255, 0.7);
+  --shadow-primary: 0 8px 20px rgba(37, 99, 235, 0.35);
+
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-space-grotesk);
+}
+
+@layer base {
+  :root {
+    --background: var(--color-base);
+    --foreground: var(--color-text-primary);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: rgba(139, 92, 246, 0.2);
+    color: var(--color-text-primary);
+  }
+}
+
+/* Base styles for the neumorphic effects */
+@layer utilities {
+  .shadow-neu {
+    box-shadow: var(--shadow-neumorph);
+  }
+  .shadow-neu-hover {
+    box-shadow: var(--shadow-neumorph-hover);
+  }
+  .shadow-neu-inset {
+    box-shadow: var(--shadow-neumorph-inset);
+  }
+  .shadow-primary-btn {
+    box-shadow: var(--shadow-primary);
+  }
+
+  .bg-grid-pattern {
+    background-image: radial-gradient(circle, rgba(11, 31, 58, 0.15) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Gradient border utility for cards on hover */
+  .gradient-border-glow {
+    position: relative;
+  }
+  .gradient-border-glow::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 30%, rgba(139, 92, 246, 0.3) 50%, rgba(6, 182, 212, 0.3) 70%, transparent 90%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+  .gradient-border-glow:hover::before {
+    opacity: 1;
+  }
+}
+
+@keyframes scroll-hint {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(8px); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-150%); }
+  100% { transform: translateX(150%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Blinking cursor for the code terminal */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
