@@ -6,12 +6,14 @@ export interface TeamMember {
   role: string;
   speciality: string;
   imageUrl?: string | null;
+  display_order?: number | null;
 }
 
 export async function getTeamMembers(): Promise<TeamMember[]> {
   const { data, error } = await supabase
     .from('team_members')
     .select('*')
+    .order('display_order', { ascending: true })
     .order('created_at', { ascending: true });
 
   if (error) {
@@ -31,6 +33,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
       role: member.role,
       initials: initials,
       speciality: member.expertise || "Engineering",
+      display_order: member.display_order,
     };
   });
 }

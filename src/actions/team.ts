@@ -41,3 +41,18 @@ export async function updateTeamMember(id: string, updates: any) {
   revalidatePath('/admin/team')
   revalidatePath('/about')
 }
+
+export async function updateTeamOrder(orders: { id: string, display_order: number }[]) {
+  const supabase = await createClient()
+  
+  // Update each one
+  for (const item of orders) {
+    const { error } = await supabase.from('team_members').update({ display_order: item.display_order }).eq('id', item.id)
+    if (error) {
+      throw new Error(error.message)
+    }
+  }
+
+  revalidatePath('/admin/team')
+  revalidatePath('/about')
+}

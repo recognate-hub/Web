@@ -28,3 +28,16 @@ export async function deleteProject(id: string) {
   revalidatePath('/admin/projects')
   revalidatePath('/projects')
 }
+
+export async function updateProject(id: string, updates: any) {
+  const supabase = await createClient()
+  
+  const { error } = await supabase.from('projects').update(updates).eq('id', id)
+  
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  revalidatePath('/admin/projects')
+  revalidatePath('/projects')
+}

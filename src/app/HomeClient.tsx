@@ -107,6 +107,7 @@ export default function HomeClient({ featuredProjects }: { featuredProjects: Pro
             {featuredServices.map((service, i) => (
               <motion.div 
                 key={service.id}
+                role="article"
                 initial={{ opacity: 0, y: 30, scale: 0.97 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: "-80px" }}
@@ -127,7 +128,7 @@ export default function HomeClient({ featuredProjects }: { featuredProjects: Pro
                   </CardContent>
                   <CardFooter className="relative z-10">
                     <Button variant="ghost" className="w-full justify-between hover:bg-transparent hover:text-accent" asChild>
-                      <Link href={`/services#${service.id}`}>
+                      <Link href={`/services#${service.id}`} aria-label={`Learn more about ${service.title}`}>
                         Learn more <ArrowRight size={16} className="transition-transform group-hover:translate-x-2" />
                       </Link>
                     </Button>
@@ -192,6 +193,7 @@ export default function HomeClient({ featuredProjects }: { featuredProjects: Pro
               return (
                 <motion.div
                   key={project.id}
+                  role="article"
                   initial={{ opacity: 0, x: i === 0 ? -25 : i === 2 ? 25 : 0, y: 25 }}
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
                   viewport={{ once: true }}
@@ -221,7 +223,7 @@ export default function HomeClient({ featuredProjects }: { featuredProjects: Pro
                     </CardContent>
                     <CardFooter className="px-2 pb-2 mt-auto">
                       <Button variant="ghost" className="px-0 hover:bg-transparent hover:text-accent" asChild>
-                        <Link href={`/projects/${project.id}`}>
+                        <Link href={`/projects/${project.id}`} aria-label={`View details of project ${project.title}`}>
                           View Details <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-2" />
                         </Link>
                       </Button>

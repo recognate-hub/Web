@@ -4,10 +4,11 @@ import { useState } from "react";
 import { Project, ProjectCategory } from "@/data/projects";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { createProject, deleteProject } from "@/actions/projects";
+import { createProject, deleteProject, updateProject } from "@/actions/projects";
 
 export default function ProjectsClient({ initialProjects }: { initialProjects: Project[] }) {
   const [loading, setLoading] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Form state for creating a new project
   const [newTitle, setNewTitle] = useState("");
@@ -24,6 +25,7 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
     setLoading(true);
     try {
       await deleteProject(id);
+      if (editingId === id) handleCancelEdit();
     } catch (error) {
       alert("Failed to delete project");
     } finally {
@@ -31,11 +33,34 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
     }
   };
 
-  const handleCreate = async (e: React.FormEvent) => {
+  const handleEdit = (project: Project) => {
+    setEditingId(project.id);
+    setNewTitle(project.title);
+    setNewCategory(project.category);
+    setNewShortDesc(project.shortDescription);
+    setNewFullDesc(project.fullDescription || "");
+    setNewTechs(project.technologies.join(', '));
+    setNewOutcomes(project.keyOutcomes?.join(', ') || "");
+    setNewStatus(project.status || "Completed");
+    setNewUrl(project.url || "");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setNewTitle("");
+    setNewShortDesc("");
+    setNewFullDesc("");
+    setNewTechs("");
+    setNewOutcomes("");
+    setNewUrl("");
+  };
+
+  const handleCreateOrUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
-    const id = newTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const id = editingId || newTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const project = {
       id,
       title: newTitle,
@@ -50,13 +75,12 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
     };
     
     try {
-      await createProject(project);
-      setNewTitle("");
-      setNewShortDesc("");
-      setNewFullDesc("");
-      setNewTechs("");
-      setNewOutcomes("");
-      setNewUrl("");
+      if (editingId) {
+        await updateProject(editingId, project);
+      } else {
+        await createProject(project);
+      }
+      handleCancelEdit();
     } catch (error) {
       alert("Failed to create project");
     } finally {
@@ -73,9 +97,9 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
       <div className="bg-base p-8 rounded-[2rem] shadow-neu mb-12 relative overflow-hidden">
         <h2 className="text-2xl font-heading font-bold text-text-primary mb-6 flex items-center gap-3">
           <div className="w-8 h-[2px] bg-accent/50"></div>
-          Add New Project
+          {editingId ? "Edit Project" : "Add New Project"}
         </h2>
-        <form onSubmit={handleCreate} className="space-y-6 max-w-2xl relative z-10">
+        <form onSubmit={handleCreateOrUpdate} className="space-y-6 max-w-2xl relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <label className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Title</label>
@@ -169,10 +193,15 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
             </div>
           </div>
 
-          <div className="pt-4">
+          <div className="pt-4 flex gap-4">
             <Button type="submit" disabled={loading} className="shadow-neu hover:shadow-neu-inset w-full sm:w-auto px-8 py-3 text-accent font-bold bg-base transition-all">
-              {loading ? "Saving..." : "Create Project"}
+              {loading ? "Saving..." : editingId ? "Update Project" : "Create Project"}
             </Button>
+            {editingId && (
+              <Button type="button" onClick={handleCancelEdit} variant="outline" className="shadow-neu hover:shadow-neu-inset w-full sm:w-auto px-8 py-3">
+                Cancel
+              </Button>
+            )}
           </div>
         </form>
       </div>
@@ -198,7 +227,14 @@ export default function ProjectsClient({ initialProjects }: { initialProjects: P
                       {p.category}
                     </span>
                   </td>
-                  <td className="p-6 text-right">
+                  <td className="p-6 text-right space-x-2">
+                    <button 
+                      onClick={() => handleEdit(p)}
+                      disabled={loading}
+                      className="text-accent hover:text-accent-cyan font-bold px-4 py-2 rounded-xl bg-base shadow-neu hover:shadow-neu-inset transition-all disabled:opacity-50"
+                    >
+                      Edit
+                    </button>
                     <button 
                       onClick={() => handleDelete(p.id)}
                       disabled={loading}

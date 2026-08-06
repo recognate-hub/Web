@@ -4,6 +4,7 @@ export interface TeamMember {
   role: string;
   expertise: string;
   image_url: string | null;
+  display_order?: number | null;
   created_at: string;
 }
 

@@ -4,7 +4,8 @@ import { useState } from "react";
 import { TeamMember } from "@/data/team";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { createTeamMember, deleteTeamMember, updateTeamMember } from "@/actions/team";
+import { createTeamMember, deleteTeamMember, updateTeamMember, updateTeamOrder } from "@/actions/team";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 
 export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] }) {
@@ -77,6 +78,7 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
         name: newName,
         role: newRole,
         speciality: newSpeciality,
+        display_order: initialTeam.length, // Put at the end by default
         imageUrl: uploadedPhotoUrl
       };
       
@@ -165,14 +167,15 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
               <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary">Name</th>
               <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary">Role</th>
               <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary">Speciality</th>
+              <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary">Order</th>
               <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-black/5">
             {initialTeam.length === 0 ? (
-              <tr><td colSpan={4} className="p-12 text-center text-text-secondary">No team members found.</td></tr>
+              <tr><td colSpan={5} className="p-12 text-center text-text-secondary">No team members found.</td></tr>
             ) : (
-              initialTeam.map(m => (
+              initialTeam.map((m, idx) => (
                 <tr key={m.id} className="hover:bg-black/5 transition-colors group">
                   <td className="p-6 text-text-primary font-medium flex items-center gap-4">
                     {m.imageUrl ? (
@@ -189,6 +192,26 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
                     <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold text-accent bg-base shadow-neu-inset">
                       {m.speciality}
                     </span>
+                  </td>
+                  <td className="p-6">
+                    <div className="flex flex-col items-center justify-center gap-1">
+                      <button 
+                        onClick={() => handleMove(idx, 'up')}
+                        disabled={loading || idx === 0}
+                        className="p-1 rounded-md hover:bg-black/5 text-text-secondary disabled:opacity-30 disabled:cursor-not-allowed"
+                        title="Move Up"
+                      >
+                        <ChevronUp size={16} />
+                      </button>
+                      <button 
+                        onClick={() => handleMove(idx, 'down')}
+                        disabled={loading || idx === initialTeam.length - 1}
+                        className="p-1 rounded-md hover:bg-black/5 text-text-secondary disabled:opacity-30 disabled:cursor-not-allowed"
+                        title="Move Down"
+                      >
+                        <ChevronDown size={16} />
+                      </button>
+                    </div>
                   </td>
                   <td className="p-6 text-right space-x-2">
                     <button 
