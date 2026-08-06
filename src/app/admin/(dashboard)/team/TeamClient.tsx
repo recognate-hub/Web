@@ -61,8 +61,8 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
     setLoading(true);
     try {
       await updateTeamOrder([
-        { id: item.id, display_order: swapItem.display_order },
-        { id: swapItem.id, display_order: item.display_order }
+        { id: item.id, display_order: swapItem.display_order ?? swapIndex },
+        { id: swapItem.id, display_order: item.display_order ?? index }
       ]);
     } catch (error) {
       alert("Failed to update order");
