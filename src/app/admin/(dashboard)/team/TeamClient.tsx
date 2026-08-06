@@ -49,6 +49,28 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
     }
   };
 
+  const handleMove = async (index: number, direction: 'up' | 'down') => {
+    if (direction === 'up' && index === 0) return;
+    if (direction === 'down' && index === initialTeam.length - 1) return;
+
+    const newTeam = [...initialTeam];
+    const item = newTeam[index];
+    const swapIndex = direction === 'up' ? index - 1 : index + 1;
+    const swapItem = newTeam[swapIndex];
+
+    setLoading(true);
+    try {
+      await updateTeamOrder([
+        { id: item.id, display_order: swapItem.display_order },
+        { id: swapItem.id, display_order: item.display_order }
+      ]);
+    } catch (error) {
+      alert("Failed to update order");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCreateOrUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
