@@ -122,7 +122,6 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
                 className="bg-base shadow-neu-inset border-none focus:ring-2 focus:ring-accent transition-all text-text-primary placeholder:text-text-secondary/50"
               />
             </div>
-            </div>
           </div>
           <div className="space-y-2">
             <label className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Description</label>
