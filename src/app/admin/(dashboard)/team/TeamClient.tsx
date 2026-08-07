@@ -7,8 +7,11 @@ import { Input } from "@/components/ui/Input";
 import { createTeamMember, deleteTeamMember, updateTeamMember, updateTeamOrder } from "@/actions/team";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const supabase = createClient();
@@ -42,6 +45,7 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
     try {
       await deleteTeamMember(id);
       if (editingId === id) handleCancelEdit();
+      router.refresh();
     } catch (error) {
       alert("Failed to delete team member");
     } finally {
@@ -54,16 +58,23 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
     if (direction === 'down' && index === initialTeam.length - 1) return;
 
     const newTeam = [...initialTeam];
-    const item = newTeam[index];
     const swapIndex = direction === 'up' ? index - 1 : index + 1;
-    const swapItem = newTeam[swapIndex];
+    
+    // Swap the items in the array
+    const temp = newTeam[index];
+    newTeam[index] = newTeam[swapIndex];
+    newTeam[swapIndex] = temp;
+
+    // Generate sequential display_order for all items to fix any corrupted state
+    const updates = newTeam.map((member, idx) => ({
+      id: member.id,
+      display_order: idx
+    }));
 
     setLoading(true);
     try {
-      await updateTeamOrder([
-        { id: item.id, display_order: swapItem.display_order ?? swapIndex },
-        { id: swapItem.id, display_order: item.display_order ?? index }
-      ]);
+      await updateTeamOrder(updates);
+      router.refresh();
     } catch (error) {
       alert("Failed to update order");
     } finally {
@@ -111,6 +122,7 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
       }
       
       handleCancelEdit();
+      router.refresh();
     } catch (error: any) {
       alert("Failed to save team member: " + error.message);
     } finally {
@@ -201,7 +213,7 @@ export default function TeamClient({ initialTeam }: { initialTeam: TeamMember[] 
                 <tr key={m.id} className="hover:bg-black/5 transition-colors group">
                   <td className="p-6 text-text-primary font-medium flex items-center gap-4">
                     {m.imageUrl ? (
-                      <img src={m.imageUrl} alt={m.name} className="w-10 h-10 rounded-full shadow-neu-inset object-cover" />
+                      <Image src={m.imageUrl} alt={m.name} width={40} height={40} className="w-10 h-10 rounded-full shadow-neu-inset object-cover" />
                     ) : (
                       <div className="w-10 h-10 rounded-full shadow-neu-inset bg-base text-accent flex items-center justify-center text-sm font-bold">
                         ?

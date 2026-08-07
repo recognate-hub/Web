@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Folder, Package, Users, LogOut, Menu, X } from "lucide-react";
+import { LayoutDashboard, Folder, Package, Users, LogOut, Menu, X, Home } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminDashboardLayout({
@@ -16,6 +16,7 @@ export default function AdminDashboardLayout({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigation = [
+    { name: "Home", href: "/", icon: Home },
     { name: "Projects", href: "/admin/projects", icon: Folder },
     { name: "Products", href: "/admin/products", icon: Package },
     { name: "Team", href: "/admin/team", icon: Users },
@@ -39,7 +40,7 @@ export default function AdminDashboardLayout({
         
         <nav className="space-y-4">
           {navigation.map((item) => {
-            const isActive = pathname.startsWith(item.href);
+            const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.name}

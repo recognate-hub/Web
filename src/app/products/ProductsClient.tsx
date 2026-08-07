@@ -6,8 +6,11 @@ import { Check, Package, Sparkles, ArrowRight, Code2 } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { CTASection } from "@/components/shared/CTASection";
 import { Product } from "@/data/products";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const CTASection = dynamic(() => import("@/components/shared/CTASection").then(mod => mod.CTASection));
 
 export default function ProductsClient({ initialProducts }: { initialProducts: Product[] }) {
   const products = initialProducts;
@@ -99,14 +102,11 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
                       <div className="flex justify-between items-start gap-4 mb-2">
                         <div className="flex items-center gap-3">
                           {product.logoUrl && (
-                            <img src={product.logoUrl} alt={`${product.name} logo`} className="w-8 h-8 object-contain" />
+                            <Image src={product.logoUrl} alt={`${product.name} logo`} width={32} height={32} className="w-8 h-8 object-contain" />
                           )}
                           <CardTitle className={`text-2xl transition-colors ${isEven ? "group-hover:text-accent-cyan" : "group-hover:text-accent-purple"}`}>
                             {product.name}
                           </CardTitle>
-                        </div>
-                        <div className="inline-flex items-center rounded-full px-3 py-1 bg-base shadow-neu-inset text-sm font-bold text-text-primary whitespace-nowrap">
-                          {product.priceTag}
                         </div>
                       </div>
                     </CardHeader>
@@ -145,17 +145,11 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
                       {product.downloadUrl && (
                         <Button variant="outline" className={`w-full group/btn hover:shadow-neu hover:${accentText} hover:border-transparent`} asChild>
                           <Link href={product.downloadUrl} className="flex items-center justify-center w-full" target="_blank">
-                            Download Product
+                            View Product
                             <ArrowRight size={16} className="ml-2 transition-transform group-hover/btn:translate-x-1" />
                           </Link>
                         </Button>
                       )}
-                      <Button variant="outline" className={`w-full group/btn hover:shadow-neu hover:${accentText} hover:border-transparent`} asChild>
-                        <Link href="/contact" className="flex items-center justify-center w-full">
-                          Get Quote
-                          <ArrowRight size={16} className="ml-2 transition-transform group-hover/btn:translate-x-1" />
-                        </Link>
-                      </Button>
                     </CardFooter>
                   </Card>
                 </motion.div>

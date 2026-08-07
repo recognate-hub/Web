@@ -6,9 +6,12 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
-import { CTASection } from "@/components/shared/CTASection";
 import { Button } from "@/components/ui/Button";
 import React, { useRef, useCallback } from "react";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const CTASection = dynamic(() => import("@/components/shared/CTASection").then(mod => mod.CTASection));
 
 const values = [
   {
@@ -273,7 +276,7 @@ export default function AboutClient({ initialTeam }: { initialTeam: TeamMember[]
                     <div className="w-28 h-28 rounded-full bg-gradient-to-br from-accent-purple/20 via-accent/10 to-accent-cyan/20 p-[2px]">
                       <div className="w-full h-full rounded-full bg-base shadow-neu-inset flex items-center justify-center overflow-hidden">
                         {member.imageUrl ? (
-                          <img src={member.imageUrl} alt={member.name} className="w-full h-full object-cover" />
+                          <Image src={member.imageUrl} alt={member.name} width={112} height={112} className="w-full h-full object-cover" />
                         ) : (
                           <span className="text-3xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-br from-accent-purple to-accent-cyan">
                             ?

@@ -15,7 +15,6 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
   // Form state
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
-  const [newPrice, setNewPrice] = useState("");
   const [newLogoFile, setNewLogoFile] = useState<File | null>(null);
   const [newDownloadUrl, setNewDownloadUrl] = useState("");
 
@@ -23,7 +22,6 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
     setEditingId(product.id);
     setNewName(product.name);
     setNewDesc(product.description);
-    setNewPrice(product.priceTag);
     setNewDownloadUrl(product.downloadUrl || "");
     setNewLogoFile(null); // Keep existing unless user uploads new
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -33,7 +31,6 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
     setEditingId(null);
     setNewName("");
     setNewDesc("");
-    setNewPrice("");
     setNewDownloadUrl("");
     setNewLogoFile(null);
   };
@@ -81,7 +78,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
       const productData = {
         name: newName,
         description: newDesc,
-        priceTag: newPrice,
+        priceTag: "",
         imageUrl: "/images/placeholder.webp",
         features: [],
         logoUrl: uploadedLogoUrl || null,
@@ -125,15 +122,6 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
                 className="bg-base shadow-neu-inset border-none focus:ring-2 focus:ring-accent transition-all text-text-primary placeholder:text-text-secondary/50"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Price Tag</label>
-              <Input 
-                value={newPrice} 
-                onChange={e => setNewPrice(e.target.value)} 
-                required 
-                placeholder="e.g. $299 or Contact us"
-                className="bg-base shadow-neu-inset border-none focus:ring-2 focus:ring-accent transition-all text-text-primary placeholder:text-text-secondary/50"
-              />
             </div>
           </div>
           <div className="space-y-2">
@@ -160,7 +148,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
               )}
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Download Link (Optional)</label>
+              <label className="text-sm font-semibold text-text-secondary uppercase tracking-wider">View Product Link (Optional)</label>
               <Input 
                 value={newDownloadUrl} 
                 onChange={e => setNewDownloadUrl(e.target.value)} 
@@ -187,22 +175,16 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
           <thead>
             <tr className="bg-black/5 border-b border-black/5">
               <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary">Name</th>
-              <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary">Price</th>
               <th className="p-6 text-sm font-bold uppercase tracking-wider text-text-secondary text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-black/5">
             {initialProducts.length === 0 ? (
-              <tr><td colSpan={3} className="p-12 text-center text-text-secondary">No products found.</td></tr>
+              <tr><td colSpan={2} className="p-12 text-center text-text-secondary">No products found.</td></tr>
             ) : (
               initialProducts.map(p => (
                 <tr key={p.id} className="hover:bg-black/5 transition-colors group">
                   <td className="p-6 text-text-primary font-medium">{p.name}</td>
-                  <td className="p-6">
-                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold text-accent bg-base shadow-neu-inset">
-                      {p.priceTag}
-                    </span>
-                  </td>
                   <td className="p-6 text-right space-x-2">
                     <button 
                       onClick={() => handleEdit(p)}
