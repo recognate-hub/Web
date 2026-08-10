@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getProjects } from "@/data/projects";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://recognate.com"; // TODO: Replace with actual domain
+  const baseUrl = "https://recognate.in"; // TODO: Replace with actual domain
 
   const staticRoutes = [
     { route: "", freq: "weekly" as const, prio: 1 },

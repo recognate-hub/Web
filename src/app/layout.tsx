@@ -20,7 +20,7 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://recognate.com"),
+  metadataBase: new URL("https://recognate.in"),
   title: "ReCognate | AI, Automation, IoT & Software Development",
   description: "ReCognate turns ideas into working technology — from enterprise automation to student capstone projects.",
   alternates: {
@@ -65,22 +65,22 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://recognate.com/#organization",
+      "@id": "https://recognate.in/#organization",
       "name": "ReCognate",
-      "url": "https://recognate.com/",
+      "url": "https://recognate.in/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://recognate.com/logo-og.webp"
+        "url": "https://recognate.in/logo-og.webp"
       },
       "description": "ReCognate turns ideas into working technology — from enterprise automation to student capstone projects."
     },
     {
       "@type": "WebSite",
-      "@id": "https://recognate.com/#website",
-      "url": "https://recognate.com/",
+      "@id": "https://recognate.in/#website",
+      "url": "https://recognate.in/",
       "name": "ReCognate",
       "publisher": {
-        "@id": "https://recognate.com/#organization"
+        "@id": "https://recognate.in/#organization"
       }
     }
   ]
