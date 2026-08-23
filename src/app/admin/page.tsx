@@ -106,7 +106,8 @@ export default function AdminLoginPage() {
             
             <Button
               type="submit"
-              className="w-full py-4 text-base font-bold shadow-neu hover:shadow-neu-inset transition-all bg-base text-accent"
+              variant="primary"
+              className="w-full py-4 text-[16px] font-bold"
               disabled={loading}
             >
               {loading ? (

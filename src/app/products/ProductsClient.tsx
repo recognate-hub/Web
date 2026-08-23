@@ -112,7 +112,7 @@ export default function ProductsClient({ initialProducts }: { initialProducts: P
                     </CardHeader>
                     
                     <CardContent className="px-2 flex-grow space-y-6 relative z-10">
-                      <CardDescription className="text-base text-text-secondary leading-relaxed">
+                      <CardDescription className="text-[16px] text-text-secondary leading-relaxed">
                         {product.description}
                       </CardDescription>
                       

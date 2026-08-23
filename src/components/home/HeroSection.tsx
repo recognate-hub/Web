@@ -85,8 +85,8 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-12 sm:mt-16 mb-24"
         >
-          <span className="font-['Cascade',var(--font-orbitron)] italic text-base sm:text-lg md:text-xl font-bold tracking-[0.3em] sm:tracking-[0.6em] md:tracking-[0.8em] uppercase text-text-secondary">
-            A Development Hub
+          <span className="font-['Cascade',var(--font-orbitron)] italic text-[16px] sm:text-lg md:text-xl font-bold tracking-[0.3em] sm:tracking-[0.6em] md:tracking-[0.8em] uppercase text-text-secondary">
+            Development Hub
           </span>
         </motion.div>
 
@@ -96,10 +96,10 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center gap-5"
+          className="flex flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-[360px] sm:max-w-none mx-auto"
         >
           {/* Charging Animated Border Button */}
-          <div className="relative group rounded-full overflow-hidden p-[2px] shadow-neu hover:shadow-neu-inset transition-all">
+          <div className="relative group rounded-full overflow-hidden p-[2px] shadow-neu hover:shadow-neu-inset transition-all flex-1 sm:w-[220px] sm:flex-none h-14 sm:h-[60px] flex">
             <motion.div 
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -107,12 +107,12 @@ export default function HeroSection() {
               style={{ background: "conic-gradient(from 0deg, transparent 60%, #8b5cf6 80%, #06b6d4 100%)" }}
             />
             <div className="absolute inset-0 blur-sm" style={{ background: "conic-gradient(from 0deg, transparent 60%, #8b5cf6 80%, #06b6d4 100%)" }}></div>
-            <a href="/contact" className="relative z-10 flex items-center justify-center px-8 py-4 rounded-full bg-base text-accent font-heading font-bold text-lg hover:text-accent-purple transition-colors">
-              Start Your Project
+            <a href="/contact" className="relative z-10 w-full h-full flex items-center justify-center rounded-full bg-base text-accent font-heading font-bold text-[13px] sm:text-lg hover:text-accent-purple transition-colors px-2 whitespace-nowrap">
+              Start Project
             </a>
           </div>
 
-          <a href="/projects" className="px-8 py-4 rounded-full bg-base shadow-neu-inset text-text-secondary font-heading font-bold text-lg hover:shadow-neu hover:text-accent transition-all">
+          <a href="/projects" className="flex-1 sm:w-[220px] sm:flex-none flex items-center justify-center h-14 sm:h-[60px] rounded-full bg-base shadow-neu-inset text-text-secondary font-heading font-bold text-[13px] sm:text-lg hover:shadow-neu hover:text-accent transition-all px-2 whitespace-nowrap">
             See Our Work
           </a>
         </motion.div>

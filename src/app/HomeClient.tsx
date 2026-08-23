@@ -491,7 +491,7 @@ export default function HomeClient({ featuredProjects }: { featuredProjects: Pro
                         </motion.div>
                       ))}
                     </div>
-                    <p className="text-text-primary leading-relaxed text-base italic">&ldquo;{testimonial.quote}&rdquo;</p>
+                    <p className="text-text-primary leading-relaxed text-[16px] italic">&ldquo;{testimonial.quote}&rdquo;</p>
                   </CardHeader>
                   <CardFooter className="pt-6 mt-auto border-t border-black/5">
                     <div className="flex items-center gap-4">

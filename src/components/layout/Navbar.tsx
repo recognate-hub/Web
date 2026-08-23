@@ -55,7 +55,7 @@ export function Navbar() {
       <div className={cn(
         "max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 relative",
         scrolled
-          ? "bg-base/60 backdrop-blur-xl shadow-neu py-3 px-6 rounded-full border border-white/50"
+          ? "bg-base/60 backdrop-blur-xl shadow-neu py-2 px-4 sm:py-3 sm:px-6 rounded-full border border-white/50"
           : "bg-transparent py-2 px-2"
       )}>
         {/* Subtle gradient shimmer on scrolled navbar */}
@@ -162,7 +162,7 @@ export function Navbar() {
                       <Link
                         href={link.href}
                         className={cn(
-                          "px-6 py-3.5 text-base font-medium rounded-2xl transition-all flex items-center gap-3",
+                          "px-6 py-3.5 text-[16px] font-medium rounded-2xl transition-all flex items-center gap-3",
                           isActive
                             ? "bg-base shadow-neu-inset text-accent"
                             : "text-text-primary hover:shadow-neu-inset hover:text-accent"

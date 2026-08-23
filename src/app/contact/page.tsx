@@ -256,14 +256,14 @@ export default function ContactPage() {
                 <h3 className="text-xl font-heading font-bold text-text-primary">Frequently Asked Questions</h3>
                 <div className="space-y-6">
                   <div>
-                    <h5 className="font-semibold text-text-primary text-base mb-2 flex items-center gap-2">
+                    <h5 className="font-semibold text-text-primary text-[16px] mb-2 flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-accent-purple"></div>
                       Do you take final year projects from any branch?
                     </h5>
                     <p className="text-sm text-text-secondary leading-relaxed pl-3.5">We primarily focus on Computer Science, Electronics, and Mechanical (Automation/Robotics) branches due to our specific engineering capabilities.</p>
                   </div>
                   <div>
-                    <h5 className="font-semibold text-text-primary text-base mb-2 flex items-center gap-2">
+                    <h5 className="font-semibold text-text-primary text-[16px] mb-2 flex items-center gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-accent-cyan"></div>
                       What's your typical project timeline?
                     </h5>
